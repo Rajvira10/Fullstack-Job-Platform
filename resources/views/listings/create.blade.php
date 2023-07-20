@@ -24,6 +24,7 @@
                                 type="text"
                                 class="border border-gray-200 rounded p-2 w-full"
                                 name="company"
+                                value="{{old('company')}}"
                             />
                         </div>
 
@@ -41,6 +42,7 @@
                                 class="border border-gray-200 rounded p-2 w-full"
                                 name="title"
                                 placeholder="Example: Senior Laravel Developer"
+                                value="{{old('title')}}"
                             />
                         </div>
 
@@ -60,6 +62,7 @@
                                 class="border border-gray-200 rounded p-2 w-full"
                                 name="location"
                                 placeholder="Example: Remote, Boston MA, etc"
+                                value="{{old('location')}}"
                             />
                         </div>
 
@@ -76,6 +79,7 @@
                                 type="text"
                                 class="border border-gray-200 rounded p-2 w-full"
                                 name="email"
+                                value="{{old('email')}}"
                             />
                         </div>
 
@@ -95,6 +99,7 @@
                                 type="text"
                                 class="border border-gray-200 rounded p-2 w-full"
                                 name="website"
+                                value="{{old('website')}}"
                             />
                         </div>
 
@@ -112,6 +117,7 @@
                                 class="border border-gray-200 rounded p-2 w-full"
                                 name="tags"
                                 placeholder="Example: Laravel, Backend, Postgres, etc"
+                                value="{{old('tags')}}"
                             />
                         </div>
 
@@ -130,6 +136,7 @@
                             <label
                                 for="description"
                                 class="inline-block text-lg mb-2"
+
                             >
                                 Job Description
                             </label>
@@ -143,7 +150,10 @@
                                 name="description"
                                 rows="10"
                                 placeholder="Include tasks, requirements, salary, etc"
-                            ></textarea>
+
+                            >
+                            {{old('description')}}
+                        </textarea>
                         </div>
 
                         <div class="mb-6">
