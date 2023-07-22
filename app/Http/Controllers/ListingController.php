@@ -11,7 +11,7 @@ class ListingController extends Controller
     //Show all listings
     public function index(){
         return view('listings.index', [
-            'listings' => Listing::latest()->filter(request(['tag', 'search']))->simplepaginate(9)
+            'listings' => Listing::latest()->filter(request(['tag', 'search']))->simplepaginate(6)
         ]);
     }
 
@@ -38,6 +38,9 @@ class ListingController extends Controller
         if($request->hasFile('logo')){
             $formFields['logo'] = $request->file('logo')->store('logos', 'public');
         }
+
+        $formFields['user_id'] = auth()->user()->id;
+
         Listing::create($formFields);
         
         return redirect('/')->with('message','Listing created successfully!');
@@ -48,7 +51,13 @@ class ListingController extends Controller
     }
 
     public function update(Request $request, Listing $listing){
-         $formFields = $request-> validate([
+        
+        //Make sure logged in user is owner
+        if(auth()->user()->id != $listing->user_id){
+            return back()->with('message','You are not authorized to edit this listing!');
+        }
+        
+        $formFields = $request-> validate([
             'title' => 'required',
             'company' => ['required'],
             'location' => 'required',
@@ -68,8 +77,16 @@ class ListingController extends Controller
     }
 
     public function destroy(Listing $listing){
+        //Make sure logged in user is owner
+        if(auth()->user()->id != $listing->user_id){
+            return back()->with('message','You are not authorized to edit this listing!');
+        }
         $listing->delete();
         return redirect('/')->with('message','Listing deleted successfully!');
+    }
+
+    public function manage(){
+        return view('listings.manage',['listings'=> auth()->user()->listings()->get()]);
     }
 }
 
